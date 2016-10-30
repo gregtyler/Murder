@@ -55,8 +55,6 @@ while (world.target.isAlive) {
   runSimulation();
 }
 
-console.log(world.actors[0]._log);
-
 // Interrogate the assassin
 const response = world.actors[0].interrogateLocation(world.locations[0]);
 
