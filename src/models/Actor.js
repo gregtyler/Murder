@@ -44,9 +44,9 @@ module.exports = class Actor {
    * @returns {String} The response from the actor
    */
   interrogateTime(time) {
-    const log = this._log.filter(function(log) {
+    const log = this._log.find(function(log) {
       return log.time === time;
-    })[0];
+    });
 
     let response = `At ${time}, I was in the ${log.location.name}.`;
 
