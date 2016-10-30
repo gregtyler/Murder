@@ -76,9 +76,9 @@ module.exports = class Actor {
     // Build the response
     if (matches.length) {
       const match = matches[0];
-      let response = `I was with ${actor.name} in the ${match.location.name} from ${match.start} until ${match.end}.`;
+      let response = `I was with ${actor.name} in the ${match.location.name} ${match.timeframe}.`;
       for (const match of matches.slice(1)) {
-        response += ` And again in the ${match.location.name} from ${match.start} until ${match.end}.`;
+        response += ` And again in the ${match.location.name} ${match.timeframe}.`;
       }
       return response;
     } else {
@@ -116,9 +116,9 @@ module.exports = class Actor {
     // Build the response
     if (matches.length) {
       const match = matches[0];
-      let response = `I was in the ${location.name} from ${match.start} until ${match.end}.`;
+      let response = `I was in the ${location.name} ${match.timeframe}.`;
       for (const match of matches.slice(1)) {
-        response += ` And again from ${match.start} until ${match.end}.`;
+        response += ` And again ${match.timeframe}.`;
       }
       return response;
     } else {

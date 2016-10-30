@@ -39,5 +39,10 @@ module.exports = function getCrossoverTimeline(actor, comparator) {
     locationMatch = null;
   }
 
+  // Add a timeframe to all of the matches
+  for (const match of matches) {
+    match.timeframe = match.start === match.end ? `at ${match.start}` : `from ${match.start} until ${match.end}`;
+  }
+
   return matches;
 };
