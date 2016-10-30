@@ -36,6 +36,7 @@ function runSimulation() {
 
     // Log everybody
     for (const actor of world.actors) actor.log(time);
+    for (const feature of world.features) feature.log(time);
   }
 }
 

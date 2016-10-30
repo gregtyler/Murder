@@ -14,7 +14,10 @@ module.exports = class Location {
   }
 
   getFeatures(time) {
-    return this.features.filter(a => a.time <= time);
+    const _this = this;
+    return world.features.filter(function(feature) {
+      return feature._log.filter(log => log.time === time)[0].location === _this;
+    });
   }
 
   addFeature(time, feature) {
