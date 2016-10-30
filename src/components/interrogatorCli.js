@@ -41,7 +41,7 @@ class InterrogatorCli {
   prompt() {
     if (this.state === STATE_START) {
       // Ask what they'd like to do
-      this.write('What do you want to interrogate someone about? {{command:time}} {{command:actor}} {{command:item}} {{command:location}}');
+      this.write('What do you want to interrogate someone about? {{command:time}} {{command:suspect}} {{command:item}} {{command:location}}');
 
       // Give them a prompt
       process.stdout.write('> ');
@@ -86,7 +86,7 @@ class InterrogatorCli {
           const item = world.items[i];
           str += ` {{command:${parseInt(i, 10) + 1}}}: ${item.name}`;
         }
-      } else if (this.interrogationType === 'neighbour') {
+      } else if (this.interrogationType === 'suspect') {
         str = 'Which suspect would you like to ask them about?';
 
         for (const i in world.actors) {
@@ -119,7 +119,7 @@ class InterrogatorCli {
       process.exit();
     } else if (str === 'cancel') {
       this.state = STATE_START;
-    } else if (this.state === STATE_START && ['time', 'actor', 'item', 'location'].indexOf(str) > -1) {
+    } else if (this.state === STATE_START && ['time', 'suspect', 'item', 'location'].indexOf(str) > -1) {
       this.interrogationType = str;
       this.state = STATE_ASSIGN;
     } else if (this.state === STATE_ASSIGN && parseInt(str, 10) > 0 && parseInt(str, 10) <= world.actors.length) {
@@ -142,7 +142,7 @@ class InterrogatorCli {
       } else if (this.interrogationType === 'item' && parseInt(str, 10) > 0 && parseInt(str, 10) <= world.items.length) {
         // Perform the interrogation
         this.write(this.actor.interrogateItem(world.items[str - 1]));
-      } else if (this.interrogationType === 'neighbour' && parseInt(str, 10) > 0 && parseInt(str, 10) <= world.actors.length) {
+      } else if (this.interrogationType === 'suspect' && parseInt(str, 10) > 0 && parseInt(str, 10) <= world.actors.length) {
         // Perform the interrogation
         this.write(this.actor.interrogateNeighbour(world.actors[str - 1]));
       }
