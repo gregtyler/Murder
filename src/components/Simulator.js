@@ -34,15 +34,12 @@ const Simulator = class {
         world.target.deathTime = time;
         const corpse = new Item({name: 'Corpse', isWeapon: false});
         world.target.location.addItem(time, corpse);
-
-        console.log(`Weapon: ${world.assassin.getWeapon().name}. Killer: ${world.assassin.name}. Location: ${world.assassin.location.name}. Time: ${time}`);
       }
 
       // Check for evidence
       for (const actor of world.actors) {
         for (const neighbour of actor.location.getActors()) {
           if (actor.isAlive && actor !== world.assassin && !neighbour.isAlive) {
-            console.log(`${actor.name} discovered ${neighbour.name}'s body at ${time}`);
             endSimulation = true;
           }
         }

@@ -13,6 +13,8 @@ const colours = {
 const STATE_START = 1;
 const STATE_ASSIGN = 2;
 const STATE_SPECIFIC = 3;
+const STATE_ACCUSE = 4;
+const STATE_CLOSE = 5;
 
 class InterrogatorCli {
   constructor() {
@@ -104,6 +106,25 @@ class InterrogatorCli {
         // Give them a prompt
         process.stdout.write('> ');
       }
+    } else if (this.state === STATE_ACCUSE) {
+      let str = 'Who do you want to accuse of committing the murder? Enter {{command:cancel}} if you\'re not ready yet.\n\n';
+
+      for (const i in world.actors) {
+        const actor = world.actors[i];
+        if (actor.isAlive) {
+          str += ` {{command:${parseInt(i, 10) + 1}}}: ${actor.name}`;
+        } else {
+          str += ` ${parseInt(i, 10) + 1}: ${actor.name}`;
+        }
+      }
+
+      // Ask what they'd like to do
+      this.write(str);
+
+      // Give them a prompt
+      process.stdout.write('> ');
+    } else if (this.state === STATE_CLOSE) {
+      process.stdout.write('Press any key to exit.');
     }
 
     // Ask for user input
@@ -134,6 +155,22 @@ class InterrogatorCli {
       } else {
         this.write('You can\'t interrogate a corpse.');
       }
+    } else if (this.state === STATE_ACCUSE && parseInt(str, 10) > 0 && parseInt(str, 10) <= world.actors.length) {
+      if (world.actors[str - 1].isAlive) {
+        // Set the actor
+        const accusee = world.actors[str - 1];
+
+        if (accusee === world.assassin) {
+          this.write(world.flavour.endCorrect(world));
+        } else {
+          this.write(world.flavour.endWrong(world, accusee));
+        }
+
+        // Move to the closed state
+        this.state = STATE_CLOSE;
+      } else {
+        this.write('It plainly wasn\'t a suicide.');
+      }
     } else if (this.state === STATE_SPECIFIC) {
       let response = null;
       if (this.interrogationType === 'location' && parseInt(str, 10) > 0 && parseInt(str, 10) <= world.locations.length) {
@@ -156,6 +193,10 @@ class InterrogatorCli {
       // Reset the state
       this.state = STATE_START;
       this.interrogationType = null;
+    } else if (this.state === STATE_START && str === 'accuse') {
+      this.state = STATE_ACCUSE;
+    } else if (this.state === STATE_CLOSE) {
+      process.exit();
     } else if (str === 'notes') {
       this.write(this.notes.join('\n'));
     } else {
