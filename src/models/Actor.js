@@ -66,7 +66,7 @@ module.exports = class Actor {
 
   /**
    * Interrogate the actor for when they saw a neighbour
-   * @param {Integer} actor The neighbour being asked about
+   * @param {Actor} actor The neighbour being asked about
    * @returns {String} The response from the actor
    */
   interrogateNeighbour(actor) {
@@ -107,6 +107,25 @@ module.exports = class Actor {
       return response;
     } else {
       return `I never saw ${actor.name}.`;
+    }
+  }
+
+  /**
+   * Interrogate the actor for where they last saw an item
+   * @param {Item} item The item being asked about
+   * @returns {String} The response from the actor
+   */
+  interrogateItem(item) {
+    // Find all times that the
+    const crossoverLogs = this._log.filter(function(log, index) {
+      return item._log[index].location === log.location;
+    });
+
+    if (crossoverLogs.length) {
+      const lastSighting = crossoverLogs.reverse()[0];
+      return `I last saw the ${item.name} in the ${lastSighting.location.name} at ${lastSighting.time}.`;
+    } else {
+      return `I never saw the ${item.name}.`;
     }
   }
 };
