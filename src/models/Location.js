@@ -13,6 +13,10 @@ module.exports = class Location {
     });
   }
 
+  getFeatures(time) {
+    return this.features.filter(a => a.time <= time);
+  }
+
   addFeature(time, feature) {
     this.features.push({time, feature});
   }
