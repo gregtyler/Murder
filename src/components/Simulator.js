@@ -1,6 +1,6 @@
-const world = require('./World');
-const randomArray = require('./lib/randomArray');
-const Item = require('./models/Item');
+const world = require('../World');
+const randomArray = require('../lib/randomArray');
+const Item = require('../models/Item');
 
 const Simulator = class {
   /**

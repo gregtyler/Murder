@@ -1,5 +1,5 @@
 const world = require('./src/World');
-const simulator = require('./src/simulator');
+const simulator = require('./src/components/Simulator');
 
 // Build the world
 world.init();
