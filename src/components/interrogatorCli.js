@@ -49,7 +49,11 @@ class InterrogatorCli {
 
       for (const i in world.actors) {
         const actor = world.actors[i];
-        str += ` {{command:${parseInt(i, 10) + 1}}}: ${actor.name}`;
+        if (actor.isAlive) {
+          str += ` {{command:${parseInt(i, 10) + 1}}}: ${actor.name}`;
+        } else {
+          str += ` ${parseInt(i, 10) + 1}: ${actor.name}`;
+        }
       }
 
       // Ask what they'd like to do
@@ -98,17 +102,23 @@ class InterrogatorCli {
     process.stdin.pause();
 
     const str = data.toString().trim();
-    if (str === 'exit') {
+    if (str === 'exit' && this.state === STATE_START) {
       process.exit();
+    } else if (str === 'cancel') {
+      this.state = STATE_START;
     } else if (this.state === STATE_START && ['time', 'actor', 'item', 'location'].indexOf(str) > -1) {
       this.interrogationType = str;
       this.state = STATE_ASSIGN;
     } else if (this.state === STATE_ASSIGN && parseInt(str, 10) > 0 && parseInt(str, 10) <= world.actors.length) {
-      // Set the actor
-      this.actor = world.actors[str - 1];
+      if (world.actors[str - 1].isAlive) {
+        // Set the actor
+        this.actor = world.actors[str - 1];
 
-      // Move to the specifics state
-      this.state = STATE_SPECIFIC;
+        // Move to the specifics state
+        this.state = STATE_SPECIFIC;
+      } else {
+        this.write('You can\'t interrogate a corpse.');
+      }
     } else if (this.state === STATE_SPECIFIC) {
       if (this.interrogationType === 'location' && parseInt(str, 10) > 0 && parseInt(str, 10) <= world.locations.length) {
         // Perform the interrogation
