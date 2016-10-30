@@ -21,6 +21,9 @@ const itemDetails = [
   {name: 'Knife', isWeapon: true},
   {name: 'Gun', isWeapon: true},
   {name: 'Candlestick', isWeapon: true},
+  {name: 'Lead piping', isWeapon: true},
+  {name: 'Rope', isWeapon: true},
+  {name: 'Piano wire', isWeapon: true},
   {name: 'Fish tank', isWeapon: false},
   {name: 'Lampshade', isWeapon: false}
 ];
@@ -78,7 +81,10 @@ world.init = function init() {
 world.reset = function() {
   for (const actor of world.actors) {
     actor._log = [];
+    actor.isAlive = true;
   }
+
+  console.log('------- RESET ---------');
 };
 
 module.exports = world;
