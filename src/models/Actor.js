@@ -38,14 +38,16 @@ module.exports = class Actor {
   }
 
   /**
-   * Interrogate the actor for information
+   * Interrogate the actor for where they were at a certain time
+   * @param {Integer} time The time being asked about
+   * @returns {String} The response from the actor
    */
-  interrogate(questions) {
+  interrogateTime(time) {
     const log = this._log.filter(function(log) {
-      return log.time === questions.time;
+      return log.time === time;
     })[0];
 
-    let response = `At ${questions.time}, I was in the ${log.location.name}.`;
+    let response = `At ${time}, I was in the ${log.location.name}.`;
 
     // List other actors present
     if (log.location.getActors().length > 1) {
@@ -54,11 +56,57 @@ module.exports = class Actor {
     }
 
     // List items in the room
-    if (log.location.getItems(questions.time).length) {
-      const items = log.location.getItems(questions.time);
+    if (log.location.getItems(time).length) {
+      const items = log.location.getItems(time);
       response += ' In the room were: ' + items.map(a => a.name).join(', ');
     }
 
     return response;
+  }
+
+  /**
+   * Interrogate the actor for when they saw a neighbour
+   * @param {Integer} actor The neighbour being asked about
+   * @returns {String} The response from the actor
+   */
+  interrogateNeighbour(actor) {
+    const matches = [];
+    let locationMatch = null;
+    for (const i in this._log) {
+      const time = this._log[i].time;
+      if (actor._log[i].location === this._log[i].location) {
+        const currentLocation = this._log[i].location;
+        // If the location changes, push a new location
+        if (currentLocation !== locationMatch) {
+          if (matches.length) {
+            matches[matches.length - 1].end = time;
+          }
+
+          locationMatch = currentLocation;
+          matches.push({start: time, location: currentLocation});
+        }
+      } else if (locationMatch !== null) {
+        matches[matches.length - 1].end = time;
+        locationMatch = null;
+      }
+    }
+
+    // If they finish in the same room, tie off the time spent together
+    if (locationMatch !== null) {
+      matches[matches.length - 1].end = Math.max.apply(this, this._log.map(a => a.time));
+      locationMatch = null;
+    }
+
+    // Build the response
+    if (matches.length) {
+      const match = matches[0];
+      let response = `I was with ${actor.name} in the ${match.location.name} from ${match.start} until ${match.end}.`;
+      for (const match of matches.slice(1)) {
+        response += ` And again in the ${match.location.name} from ${match.start} until ${match.end}.`;
+      }
+      return response;
+    } else {
+      return `I never saw ${actor.name}.`;
+    }
   }
 };

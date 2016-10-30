@@ -56,8 +56,6 @@ while (world.target.isAlive) {
 }
 
 // Interrogate the assassin
-const response = world.actors[0].interrogate({
-  time: 11
-});
+const response = world.actors[0].interrogateNeighbour(world.actors[1]);
 
 console.log(`${world.actors[0].name}: ${response}`);

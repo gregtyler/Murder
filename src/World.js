@@ -20,7 +20,9 @@ const locationNames = [
 const itemDetails = [
   {name: 'Knife', isWeapon: true},
   {name: 'Gun', isWeapon: true},
-  {name: 'Candlestick', isWeapon: true}
+  {name: 'Candlestick', isWeapon: true},
+  {name: 'Fish tank', isWeapon: false},
+  {name: 'Lampshade', isWeapon: false}
 ];
 
 const world = {
