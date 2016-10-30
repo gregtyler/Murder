@@ -1,5 +1,6 @@
 const world = require('./src/World');
 const simulator = require('./src/components/Simulator');
+const interrogatorCli = require('./src/components/interrogatorCli');
 
 // Build the world
 world.init();
@@ -14,3 +15,6 @@ while (world.target.isAlive || simulator.iterations > 12) {
 const response = world.actors[0].interrogateLocation(world.locations[0]);
 
 console.log(`${world.actors[0].name}: ${response}`);
+
+// Being the interrogator
+interrogatorCli.start();

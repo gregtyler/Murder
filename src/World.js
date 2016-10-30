@@ -1,34 +1,7 @@
-const actorNames = [
-  'Dr. Green',
-  'Prof. Coal',
-  'Lady Peach',
-  'Dame Turquoise',
-  'Mr. Pink',
-  'Mx. Orchid'
-];
-
-const locationNames = [
-  'Kitchen',
-  'Sitting Room',
-  'Dining Room',
-  'Master Bedroom',
-  'Bathroom',
-  'Larder',
-  'Vestibule'
-];
-
-const itemDetails = [
-  {name: 'Knife', isWeapon: true},
-  {name: 'Gun', isWeapon: true},
-  {name: 'Candlestick', isWeapon: true},
-  {name: 'Lead piping', isWeapon: true},
-  {name: 'Rope', isWeapon: true},
-  {name: 'Piano wire', isWeapon: true},
-  {name: 'Fish tank', isWeapon: false},
-  {name: 'Lampshade', isWeapon: false}
-];
+const flavour = require('./flavours/mansion.js');
 
 const world = {
+  flavour,
   locations: [],
   actors: [],
   items: [],
@@ -46,19 +19,19 @@ world.init = function init() {
   const randomArray = require('./lib/randomArray');
 
   // Build an array of locations
-  for (const name of locationNames) {
+  for (const name of flavour.locationNames) {
     world.locations.push(new Location(name));
   }
 
   // Build an array of actors
-  for (const name of actorNames) {
+  for (const name of flavour.actorNames) {
     const actor = new Actor(name);
     actor.setLocation(randomArray(world.locations));
     world.actors.push(actor);
   }
 
   // Build an array of items
-  for (const itemDetail of itemDetails) {
+  for (const itemDetail of flavour.itemDetails) {
     const item = new Item(itemDetail);
     item.setLocation(randomArray(world.locations));
     world.items.push(item);
