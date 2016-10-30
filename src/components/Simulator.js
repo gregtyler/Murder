@@ -24,17 +24,18 @@ const Simulator = class {
       }
 
       // If the assassin sees a weapon, then take it
-      if (world.assassin.location.getItems().filter(a => a.isWeapon).length) {
-        world.assassin.location.getItems().filter(a => a.isWeapon)[0].holder = world.assassin;
+      if (!world.assassin.getWeapon() && world.assassin.location.getItems().filter(a => a.isWeapon).length) {
+        world.assassin.location.getItems().find(a => a.isWeapon).holder = world.assassin;
       }
 
       // If the assassin is with their target and their target alone then do the deed
-      if (world.target.isAlive && world.target.location === world.assassin.location && world.assassin.getWeapon().length && world.target.location.getActors().length === 2) {
+      if (world.target.isAlive && world.target.location === world.assassin.location && world.assassin.getWeapon() && world.target.location.getActors().length === 2) {
         world.target.isAlive = false;
+        world.target.deathTime = time;
         const corpse = new Item({name: 'Corpse', isWeapon: false});
         world.target.location.addItem(time, corpse);
 
-        console.log(`Weapon: ${world.assassin.getWeapon()[0].name}. Killer: ${world.assassin.name}. Location: ${world.assassin.location.name}. Time: ${time}`);
+        console.log(`Weapon: ${world.assassin.getWeapon().name}. Killer: ${world.assassin.name}. Location: ${world.assassin.location.name}. Time: ${time}`);
       }
 
       // Check for evidence

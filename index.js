@@ -12,9 +12,9 @@ while (world.target.isAlive || simulator.iterations > 12) {
 }
 
 // Interrogate the assassin
-const response = world.actors[0].interrogateLocation(world.locations[0]);
+/*const response = world.actors[0].interrogateLocation(world.locations[0]);
 
-console.log(`${world.actors[0].name}: ${response}`);
+console.log(`${world.actors[0].name}: ${response}`);*/
 
 // Being the interrogator
 interrogatorCli.start();

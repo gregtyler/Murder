@@ -28,7 +28,7 @@ module.exports = class Actor {
    * Get the weapon the actor has
    */
   getWeapon() {
-    return world.items.filter(item => (item.holder === this && item.isWeapon === true));
+    return world.items.find(item => (item.holder === this && item.isWeapon === true));
   }
 
   /**

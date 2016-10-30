@@ -56,8 +56,6 @@ world.reset = function() {
     actor._log = [];
     actor.isAlive = true;
   }
-
-  console.log('------- RESET ---------');
 };
 
 module.exports = world;
