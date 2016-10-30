@@ -5,6 +5,7 @@ const colours = {
   loc: 32,
   item: 35,
   actor: 36,
+  victim: 31,
   command: [34, 47]
 };
 
@@ -22,7 +23,7 @@ class InterrogatorCli {
    * Write formatted text to the command line
    */
   write(text) {
-    const textFormatted = text.replace(/\{\{(loc|item|actor|command)\:(.*?)\}\}/g, function(match, type, contents) {
+    const textFormatted = text.replace(/\{\{(loc|item|actor|command|victim)\:(.*?)\}\}/g, function(match, type, contents) {
       // Get the colour set as an array
       let colourSet = colours[type];
       if (typeof colourSet === 'number') colourSet = [colourSet];
@@ -61,34 +62,46 @@ class InterrogatorCli {
 
       // Give them a prompt
       process.stdout.write('> ');
-    } else if (this.state === STATE_SPECIFIC && this.interrogationType === 'time') {
-      // Ask what they'd like to do
-      let str = 'What time slot would you like to ask about?';
+    } else if (this.state === STATE_SPECIFIC) {
+      let str = null;
+      // Show different options for each type of interrogation
+      if (this.interrogationType === 'time') {
+        str = 'What time slot would you like to ask about?';
 
-      for (const i in world.actors[0]._log) {
-        const log = world.actors[0]._log[i];
-        str += ` {{command:${parseInt(i, 10) + 1}}}: ${log.time}`;
+        for (const i in world.actors[0]._log) {
+          const log = world.actors[0]._log[i];
+          str += ` {{command:${parseInt(i, 10) + 1}}}: ${log.time}`;
+        }
+      } else if (this.interrogationType === 'location') {
+        str = 'Which location would you like to ask about?';
+
+        for (const i in world.locations) {
+          const location = world.locations[i];
+          str += ` {{command:${parseInt(i, 10) + 1}}}: ${location.name}`;
+        }
+      } else if (this.interrogationType === 'item') {
+        str = 'Which item would you like to ask about?';
+
+        for (const i in world.items) {
+          const item = world.items[i];
+          str += ` {{command:${parseInt(i, 10) + 1}}}: ${item.name}`;
+        }
+      } else if (this.interrogationType === 'neighbour') {
+        str = 'Which suspect would you like to ask them about?';
+
+        for (const i in world.actors) {
+          const actor = world.actors[i];
+          str += ` {{command:${parseInt(i, 10) + 1}}}: ${actor.name}`;
+        }
       }
 
-      // Ask what they'd like to do
-      this.write(str);
+      if (str !== null) {
+        // Ask what they'd like to do
+        this.write(str);
 
-      // Give them a prompt
-      process.stdout.write('> ');
-    } else if (this.state === STATE_SPECIFIC && this.interrogationType === 'location') {
-      // Ask what they'd like to do
-      let str = 'What location would you like to ask about?';
-
-      for (const i in world.locations) {
-        const location = world.locations[i];
-        str += ` {{command:${parseInt(i, 10) + 1}}}: ${location.name}`;
+        // Give them a prompt
+        process.stdout.write('> ');
       }
-
-      // Ask what they'd like to do
-      this.write(str);
-
-      // Give them a prompt
-      process.stdout.write('> ');
     }
 
     // Ask for user input
@@ -102,7 +115,7 @@ class InterrogatorCli {
     process.stdin.pause();
 
     const str = data.toString().trim();
-    if (str === 'exit' && this.state === STATE_START) {
+    if (str === 'exit') {
       process.exit();
     } else if (str === 'cancel') {
       this.state = STATE_START;
@@ -126,6 +139,12 @@ class InterrogatorCli {
       } else if (this.interrogationType === 'time' && parseInt(str, 10) > 0 && parseInt(str, 10) <= world.actors[0]._log.length) {
         // Perform the interrogation
         this.write(this.actor.interrogateTime(world.actors[0]._log[str - 1]));
+      } else if (this.interrogationType === 'item' && parseInt(str, 10) > 0 && parseInt(str, 10) <= world.items.length) {
+        // Perform the interrogation
+        this.write(this.actor.interrogateItem(world.items[str - 1]));
+      } else if (this.interrogationType === 'neighbour' && parseInt(str, 10) > 0 && parseInt(str, 10) <= world.actors.length) {
+        // Perform the interrogation
+        this.write(this.actor.interrogateNeighbour(world.actors[str - 1]));
       }
 
       // Reset the state
