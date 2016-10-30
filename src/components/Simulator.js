@@ -51,6 +51,7 @@ const Simulator = class {
       // Log everybody
       for (const actor of world.actors) actor.log(time);
       for (const item of world.items) item.log(time);
+      world.log(time);
     }
   }
 };

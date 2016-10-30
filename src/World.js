@@ -5,6 +5,7 @@ const world = {
   locations: [],
   actors: [],
   items: [],
+  _log: [],
   target: null,
   assassin: null
 };
@@ -56,6 +57,19 @@ world.reset = function() {
     actor._log = [];
     actor.isAlive = true;
   }
+
+  for (const item of world.items) {
+    item._log = [];
+  }
+
+  world._log = [];
+};
+
+/**
+ * Log a slot in the world
+ */
+world.log = function(time) {
+  this._log.push({time});
 };
 
 module.exports = world;

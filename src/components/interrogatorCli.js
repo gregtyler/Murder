@@ -70,8 +70,8 @@ class InterrogatorCli {
       if (this.interrogationType === 'time') {
         str = 'What time slot would you like to ask about?';
 
-        for (const i in world.actors[0]._log) {
-          const log = world.actors[0]._log[i];
+        for (const i in world._log) {
+          const log = world._log[i];
           str += ` {{command:${parseInt(i, 10) + 1}}}: ${log.time}`;
         }
       } else if (this.interrogationType === 'location') {
