@@ -52,6 +52,6 @@ const Simulator = class {
       for (const item of world.items) item.log(time);
     }
   }
-}
+};
 
 module.exports = new Simulator();
