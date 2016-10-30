@@ -141,7 +141,7 @@ class InterrogatorCli {
         response = this.actor.interrogateLocation(world.locations[str - 1]);
       } else if (this.interrogationType === 'time' && parseInt(str, 10) > 0 && parseInt(str, 10) <= world.actors[0]._log.length) {
         // Perform the interrogation
-        response = this.actor.interrogateTime(world.actors[0]._log[str - 1]);
+        response = this.actor.interrogateTime(world.actors[0]._log[str - 1].time);
       } else if (this.interrogationType === 'item' && parseInt(str, 10) > 0 && parseInt(str, 10) <= world.items.length) {
         // Perform the interrogation
         response = this.actor.interrogateItem(world.items[str - 1]);
