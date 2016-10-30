@@ -1,4 +1,4 @@
-module.exports = class Feature {
+module.exports = class Item {
   constructor({name, isWeapon}) {
     this.name = name;
     this.isWeapon = isWeapon;
@@ -8,14 +8,14 @@ module.exports = class Feature {
   }
 
   /**
-   * Move the feature
+   * Move the item
    */
   setLocation(location) {
     this.location = location;
   }
 
   /**
-   * Change who's holding the feature
+   * Change who's holding the item
    */
   setHolder(holder) {
     this.holder = holder;

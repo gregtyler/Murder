@@ -45,9 +45,9 @@ module.exports = class Actor {
     }
 
     // List items in the room
-    if (log.location.getFeatures(questions.time).length) {
-      const features = log.location.getFeatures(questions.time);
-      response += ' In the room were: ' + features.map(a => a.name).join(', ');
+    if (log.location.getItems(questions.time).length) {
+      const items = log.location.getItems(questions.time);
+      response += ' In the room were: ' + items.map(a => a.name).join(', ');
     }
 
     return response;

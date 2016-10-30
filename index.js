@@ -1,5 +1,6 @@
 const world = require('./src/World');
 const randomArray = require('./src/lib/randomArray');
+const Item = require('./src/models/Item');
 
 // Build the world
 world.init();
@@ -22,7 +23,8 @@ function runSimulation() {
     // If the assassin is with their target and their target alone then do the deed
     if (world.target.isAlive && world.target.location === world.assassin.location && world.target.location.getActors().length === 2) {
       world.target.isAlive = false;
-      world.target.location.addFeature(time, 'corpse');
+      const corpse = new Item({name: 'Corpse', isWeapon: false});
+      world.target.location.addItem(time, corpse);
     }
 
     // Check for evidence
@@ -36,7 +38,7 @@ function runSimulation() {
 
     // Log everybody
     for (const actor of world.actors) actor.log(time);
-    for (const feature of world.features) feature.log(time);
+    for (const item of world.items) item.log(time);
   }
 }
 
