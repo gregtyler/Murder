@@ -18,7 +18,7 @@ module.exports = {
     });
 
     // Write some intro text
-    return `You have been invited at the request of Dr. Green to a party at his mansion near the picturesque village of Ram's Bottom. The party is to celebrate his 50th birthday, and he intends to invite many of his closest friends and colleagues. You've only known the Doctor for a few months, so it's a great privilege to have been invited
+    return `You have been invited at the request of Dr. Green to a party at his mansion near the picturesque village of Eccleshurst. The party is to celebrate his 50th birthday, and he intends to invite many of his closest friends and colleagues. You've only known the Doctor for a few months, so it's a great privilege to have been invited
 
 The party started at 1100 but, due to botched directions, you arrive at ${endTime}. Just as you arrive, you hear a blood-curdling scream! One of the guests has been murdered and the body of {{victim:${world.target.name}}} was just discovered by {{actor:${discoverer.name}}} in the {{loc:${world.target.location.name}}}. It appears they were killed with the {{item:${killingWeapon.name}}}.
 
@@ -50,7 +50,7 @@ Dr. Green is ecstatic with your work. "What an exciting night! I can only hope m
 
 ` + (drGreen.isAlive ? `"To think I ever trusted them." Dr. Green laments.
 
-` : '') + `However, a month later the investigation finds ${accusee.name} innocent of all charges. Front page headlines spout about "the amateur detective who almost got an innocent person killed". Embarrassed, you vow never to return to Ram's Bottom.` + (drGreen.isAlive ? ' And, indeed, you never hear from Dr. Green again.' : '') + `
+` : '') + `However, a month later the investigation finds ${accusee.name} innocent of all charges. Front page headlines spout about "the amateur detective who almost got an innocent person killed". Embarrassed, you vow never to return to Eccleshurst.` + (drGreen.isAlive ? ' And, indeed, you never hear from Dr. Green again.' : '') + `
 
 Two months later, you read a story hidden on page 5 of the newspaper. Another death, and this time it's poor ${victim.name} who's been horribly murdered by an unknown assailant. An amateur detective at the scene, one Hercule Poirot, points to ${world.assassin.name} as the guilty party, but have the police rebuilt their trust in amateurs yet?`;
   },
