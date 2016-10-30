@@ -1,3 +1,5 @@
+const world = require('../World.js');
+
 module.exports = class Actor {
   constructor(name) {
     this.name = name;
@@ -19,6 +21,13 @@ module.exports = class Actor {
    */
   setTarget(target) {
     this.target = target;
+  }
+
+  /**
+   * Get the weapon the actor has
+   */
+  getWeapon() {
+    return world.items.filter(item => (item.holder === this && item.isWeapon === true));
   }
 
   /**

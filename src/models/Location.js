@@ -16,7 +16,12 @@ module.exports = class Location {
   getItems(time) {
     const _this = this;
     return world.items.filter(function(item) {
-      return item._log.filter(log => log.time === time)[0].location === _this;
+      if (typeof time === 'undefined') {
+        return item.location === _this;
+      } else {
+        const items = item._log.filter(log => log.time === time && log.holder === null);
+        if (items.length) return items[0].location === _this;
+      }
     });
   }
 
