@@ -177,6 +177,7 @@ class InterrogatorCli {
 
     // Write the intro
     this.write(world.flavour.intro(world));
+    this.notes.push(world.flavour.intro(world));
 
     this.prompt();
   }
