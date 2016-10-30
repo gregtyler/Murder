@@ -54,6 +54,8 @@ module.exports = class Actor {
     if (log.location.getActors().length > 1) {
       const neighbours = log.location.getActors().filter(a => a !== this);
       response += ' ' + neighbours.map(a => a.name).join(', ') + ' were there.';
+    } else {
+      response += ' I was alone.';
     }
 
     // List items in the room
