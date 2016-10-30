@@ -16,6 +16,7 @@ const STATE_SPECIFIC = 3;
 
 class InterrogatorCli {
   constructor() {
+    this.notes = [];
     this.state = STATE_START;
     this.interrogationType = null;
   }
@@ -42,6 +43,7 @@ class InterrogatorCli {
     if (this.state === STATE_START) {
       // Ask what they'd like to do
       this.write('What do you want to interrogate someone about? {{command:time}} {{command:suspect}} {{command:item}} {{command:location}}');
+      this.write('You can also use {{command:notes}} to review your notes, or {{command:accuse}} to accuse someone.');
 
       // Give them a prompt
       process.stdout.write('> ');
@@ -133,23 +135,29 @@ class InterrogatorCli {
         this.write('You can\'t interrogate a corpse.');
       }
     } else if (this.state === STATE_SPECIFIC) {
+      let response = null;
       if (this.interrogationType === 'location' && parseInt(str, 10) > 0 && parseInt(str, 10) <= world.locations.length) {
         // Perform the interrogation
-        this.write(this.actor.interrogateLocation(world.locations[str - 1]));
+        response = this.actor.interrogateLocation(world.locations[str - 1]);
       } else if (this.interrogationType === 'time' && parseInt(str, 10) > 0 && parseInt(str, 10) <= world.actors[0]._log.length) {
         // Perform the interrogation
-        this.write(this.actor.interrogateTime(world.actors[0]._log[str - 1]));
+        response = this.actor.interrogateTime(world.actors[0]._log[str - 1]);
       } else if (this.interrogationType === 'item' && parseInt(str, 10) > 0 && parseInt(str, 10) <= world.items.length) {
         // Perform the interrogation
-        this.write(this.actor.interrogateItem(world.items[str - 1]));
+        response = this.actor.interrogateItem(world.items[str - 1]);
       } else if (this.interrogationType === 'suspect' && parseInt(str, 10) > 0 && parseInt(str, 10) <= world.actors.length) {
         // Perform the interrogation
-        this.write(this.actor.interrogateNeighbour(world.actors[str - 1]));
+        response = this.actor.interrogateNeighbour(world.actors[str - 1]);
       }
+
+      this.notes.push(`${this.actor.name}: ${response}`);
+      this.write(response);
 
       // Reset the state
       this.state = STATE_START;
       this.interrogationType = null;
+    } else if (str === 'notes') {
+      this.write(this.notes.join('\n'));
     } else {
       this.write(`I don't understand the command "${str}"`);
     }
