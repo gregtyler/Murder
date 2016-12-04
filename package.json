@@ -1,0 +1,24 @@
+{
+  "name": "Murder",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gregtyler/Murder.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gregtyler/Murder/issues"
+  },
+  "homepage": "https://github.com/gregtyler/Murder#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-rollup": "^2.5.1",
+    "gulp-sourcemaps": "^1.9.1",
+    "rollup-plugin-commonjs": "^5.0.5"
+  }
+}
