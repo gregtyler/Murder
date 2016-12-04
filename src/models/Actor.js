@@ -1,7 +1,7 @@
-const world = require('../World');
-const getCrossoverTimeline = require('../lib/getCrossoverTimeline');
+import world from '../World';
+import getCrossoverTimeline from '../lib/getCrossoverTimeline';
 
-module.exports = class Actor {
+export default class Actor {
   constructor(name) {
     this.name = name;
     this.target = null;

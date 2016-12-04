@@ -1,6 +1,6 @@
-const randomArray = require('../lib/randomArray');
+import randomArray from '../lib/randomArray';
 
-module.exports = {
+export default {
   intro: function(world) {
     // Work out the killing weapon
     const killingWeapon = world.items.find(function(item) {

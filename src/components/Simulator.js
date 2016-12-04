@@ -1,6 +1,6 @@
-const world = require('../World');
-const randomArray = require('../lib/randomArray');
-const Item = require('../models/Item');
+import world from '../World';
+import randomArray from '../lib/randomArray';
+import Item from '../models/Item';
 
 const Simulator = class {
   /**
@@ -53,4 +53,4 @@ const Simulator = class {
   }
 };
 
-module.exports = new Simulator();
+export default new Simulator();

@@ -5,7 +5,7 @@
  * @returns {Array} An array of the timeline where the actor was either in the
  * given location or in the same location as the given actor.
  */
-module.exports = function getCrossoverTimeline(actor, comparator) {
+export default function getCrossoverTimeline(actor, comparator) {
   const matches = [];
   let locationMatch = null;
   let prevTime;

@@ -1,4 +1,8 @@
-const flavour = require('./flavours/mansion.js');
+import flavour from './flavours/mansion.js';
+import Actor from './models/Actor';
+import Location from './models/Location';
+import Item from './models/Item';
+import randomArray from './lib/randomArray';
 
 const world = {
   flavour,
@@ -14,11 +18,6 @@ const world = {
  * Build the world/environment
  */
 world.init = function init() {
-  const Actor = require('./models/Actor');
-  const Location = require('./models/Location');
-  const Item = require('./models/Item');
-  const randomArray = require('./lib/randomArray');
-
   // Build an array of locations
   for (const name of flavour.locationNames) {
     world.locations.push(new Location(name));
@@ -72,4 +71,4 @@ world.log = function(time) {
   this._log.push({time});
 };
 
-module.exports = world;
+export default world;

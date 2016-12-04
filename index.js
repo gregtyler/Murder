@@ -1,6 +1,6 @@
-const world = require('./src/World');
-const simulator = require('./src/components/Simulator');
-const interrogatorCli = require('./src/components/interrogatorCli');
+import world from './src/World';
+import simulator from './src/components/Simulator';
+import interrogatorCli from './src/components/interrogatorCli';
 
 // Build the world
 world.init();

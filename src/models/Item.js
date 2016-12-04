@@ -1,4 +1,4 @@
-module.exports = class Item {
+export default class Item {
   constructor({name, isWeapon}) {
     this.name = name;
     this.isWeapon = isWeapon;

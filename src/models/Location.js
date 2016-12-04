@@ -1,6 +1,6 @@
-const world = require('../World.js');
+import world from '../World.js';
 
-module.exports = class Location {
+export default class Location {
   constructor(name) {
     this.name = name;
     this.items = [];

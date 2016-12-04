@@ -3,7 +3,7 @@
  * @param {Array} arr The array to pick from
  * @returns {Mixed} The randomly selected item
  */
-module.exports = function randomArray(arr) {
+export default function randomArray(arr) {
   const id = Math.floor(Math.random() * arr.length);
   return arr[id];
 };

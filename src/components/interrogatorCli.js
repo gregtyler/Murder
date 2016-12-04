@@ -1,4 +1,4 @@
-const world = require('../World');
+import world from '../World';
 
 // Colours for command line
 const colours = {
@@ -224,4 +224,4 @@ class InterrogatorCli {
   }
 };
 
-module.exports = new InterrogatorCli();
+export default new InterrogatorCli();
