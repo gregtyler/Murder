@@ -38,6 +38,7 @@ export default class Card {
     if (this.type === 'TIME') target = target.name;
 
     this.used = true;
+    this.$card.parentElement.removeChild(this.$card);
 
     return interrogationFunction.call(actor, target);
   }
@@ -63,10 +64,21 @@ export default class Card {
     else if (this.type === 'SUSPECT') return world.actors.filter(act => act !== actor);
   }
 
+  getName() {
+    if (this.type === 'LOCATION') return 'Location interrogation';
+    else if (this.type === 'TIME') return 'Time interrogation';
+    else if (this.type === 'ITEM') return 'Item interrogation';
+    else if (this.type === 'SUSPECT') return 'Suspect interrogation';
+  }
+
   getDescription() {
     if (this.type === 'LOCATION') return 'Ask a suspect when they were in a given room';
     else if (this.type === 'TIME') return 'Ask a suspect where they were at a given time';
     else if (this.type === 'ITEM') return 'Ask a suspect when they saw a particular item';
     else if (this.type === 'SUSPECT') return 'Ask a suspect when they saw another suspect';
   }
+};
+
+Card.getTypes = function() {
+  return ['LOCATION', 'TIME', 'ITEM', 'SUSPECT'];
 };

@@ -60,12 +60,13 @@ class InterrogatorWeb {
     const _this = this;
 
     // Draw cards
-    this.cards = [
-      new Card({name: 'Time interrogation', type: 'TIME'}),
-      new Card({name: 'Suspect interrogation', type: 'SUSPECT'}),
-      new Card({name: 'Item interrogation', type: 'ITEM'}),
-      new Card({name: 'Location interrogation', type: 'LOCATION'})
-    ];
+    const cardTypes = Card.getTypes();
+    this.cards = [];
+
+    for (let i = 0; i < 7; i++) {
+      const type = cardTypes[Math.floor(Math.random() * cardTypes.length)];
+      this.cards.push(new Card({type}));
+    }
 
     // Show flavour text
     this.log(world.flavour.intro(world));
@@ -74,7 +75,7 @@ class InterrogatorWeb {
     for (const card of this.cards) {
       const $card = document.createElement('div');
       $card.classList.add('card');
-      $card.innerHTML = '<strong>' + card.name + '</strong>';
+      $card.innerHTML = '<strong>' + card.getName() + '</strong>';
       const $desc = document.createElement('p');
       $desc.innerHTML = card.getDescription();
       $desc.style = 'margin-bottom: 0;';
