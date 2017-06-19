@@ -28,4 +28,10 @@ $modalBG.addEventListener('click', function() {
   modal.hide();
 });
 
+document.body.addEventListener('keydown', function(event) {
+  if (event.which === 27) {
+    modal.hide();
+  }
+});
+
 export default modal;
