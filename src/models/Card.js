@@ -1,4 +1,6 @@
 import world from '../World';
+import modal from '../lib/modal';
+import arrayIntoList from '../lib/arrayIntoList';
 
 export default class Card {
   constructor({name, desc, type}) {
@@ -11,12 +13,26 @@ export default class Card {
   /**
    * Use the card
    */
-  use(actor, target) {
+  use(actor) {
+    const _this = this;
+
+    return new Promise(function(resolve) {
+      const $list = arrayIntoList(_this.getInterrogationOptions(actor), function(target) {
+        resolve(_this.performInterrogation(actor, target));
+      });
+
+      modal.show(_this.getInterrogationOptionsTitle(), $list);
+    });
+  }
+
+  performInterrogation(actor, target) {
     const interrogationFunction = actor[this.getInterrogationMethod()];
+
+    if (this.type === 'TIME') target = target.name;
 
     this.used = true;
 
-    return interrogationFunction.call(world, target);
+    return interrogationFunction.call(actor, target);
   }
 
   getInterrogationMethod() {
@@ -24,6 +40,20 @@ export default class Card {
     else if (this.type === 'TIME') return 'interrogateTime';
     else if (this.type === 'ITEM') return 'interrogateItem';
     else if (this.type === 'SUSPECT') return 'interrogateNeighbour';
+  }
+
+  getInterrogationOptionsTitle() {
+    if (this.type === 'LOCATION') return 'Which location would you like to ask about?';
+    else if (this.type === 'TIME') return 'What time slot would you like to ask about?';
+    else if (this.type === 'ITEM') return 'Which item would you like to ask about?';
+    else if (this.type === 'SUSPECT') return 'Which item would you like to ask about?';
+  }
+
+  getInterrogationOptions() {
+    if (this.type === 'LOCATION') return world.locations;
+    else if (this.type === 'TIME') return world._log.map(log => ({name: log.time}));
+    else if (this.type === 'ITEM') return world.items;
+    else if (this.type === 'SUSPECT') return world.actors;
   }
 
   getDescription() {

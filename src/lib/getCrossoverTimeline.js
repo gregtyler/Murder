@@ -7,8 +7,10 @@
  */
 export default function getCrossoverTimeline(actor, comparator) {
   const matches = [];
+  const global = typeof process !== 'undefined' ? process : window;
   let locationMatch = null;
   let prevTime;
+
   for (const i in actor._log) {
     const time = actor._log[i].time;
     if (
@@ -35,7 +37,7 @@ export default function getCrossoverTimeline(actor, comparator) {
 
   // If they finish in the same room, tie off the time spent together
   if (locationMatch !== null) {
-    matches[matches.length - 1].end = Math.max.apply(process, actor._log.map(a => a.time));
+    matches[matches.length - 1].end = Math.max.apply(global, actor._log.map(a => a.time));
     locationMatch = null;
   }
 

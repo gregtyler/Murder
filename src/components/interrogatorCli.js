@@ -91,7 +91,7 @@ class InterrogatorCli {
           str += ` {{command:${parseInt(i, 10) + 1}}}: ${item.name}`;
         }
       } else if (this.interrogationType === 'suspect') {
-        str = 'Which suspect would you like to ask them about?';
+        str = 'Which item would you like to ask about?';
 
         for (const i in world.actors) {
           const actor = world.actors[i];

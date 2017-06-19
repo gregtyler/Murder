@@ -1,6 +1,7 @@
 import world from '../World';
 import Card from '../models/Card.js';
 import modal from '../lib/modal.js';
+import arrayIntoList from '../lib/arrayIntoList';
 
 const $deck = document.querySelector('#deck');
 const $log = document.querySelector('#log');
@@ -24,35 +25,25 @@ class InterrogatorWeb {
    * Perform an interrogation
    */
   performInterrogation(card, actor) {
-    let response;
+    const _this = this;
 
-    try {
-      response = card.use(actor, 'bedroom');
-    } catch (e) {
-      alert(e.message);
-    }
-
-    modal.hide();
-    this.log(response);
+    card.use(actor)
+      .then(function(response) {
+        modal.hide();
+        _this.log(`<strong>${actor.name}</strong>: ${response}`);
+      })
+      .catch(function(e) {
+        alert(e.message);
+      });
   }
 
   /**
    * Select who to interrogate
    */
   interrogate(card) {
-    const $list = document.createElement('div');
     const _this = this;
-
-    world.actors.forEach(function(actor) {
-      const $actor = document.createElement('a');
-      $actor.style = 'display: block;';
-      $actor.href = '#';
-      $actor.innerHTML = actor.name;
-      $actor.addEventListener('click', function(event) {
-        event.preventDefault();
-        _this.performInterrogation(card, actor);
-      });
-      $list.appendChild($actor);
+    const $list = arrayIntoList(world.actors, function(actor) {
+      _this.performInterrogation(card, actor);
     });
 
     modal.show('Who do you want to interrogate?', $list);
