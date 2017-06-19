@@ -64,7 +64,7 @@ body {
   pointer-events: all;
 }
 
-.card:hover {
+.card:hover, .card.card--open {
   transform: none;
 }
 

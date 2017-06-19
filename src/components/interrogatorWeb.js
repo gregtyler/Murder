@@ -46,6 +46,9 @@ class InterrogatorWeb {
     // You can't interrogate a corpse
     const actors = world.actors.filter(actor => actor.isAlive);
 
+    this.cards.forEach(card => card.$card.classList.remove('card--open'));
+    card.$card.classList.add('card--open');
+
     const $list = arrayIntoList(actors, function(actor) {
       _this.performInterrogation(card, actor);
     });

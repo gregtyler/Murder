@@ -21,6 +21,10 @@ const modal = {
   hide: function() {
     $modalBG.hidden = true;
     $modal.hidden = true;
+
+    // Close any open cards
+    const $$openCards = document.querySelectorAll('.card.card--open');
+    $$openCards.forEach($card => $card.classList.remove('card--open'));
   }
 };
 
