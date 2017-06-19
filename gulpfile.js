@@ -30,3 +30,4 @@ gulp.task('bundle', function() {
 gulp.task('watch', function() {
   gulp.watch(paths.scripts, ['bundle']);
 });
+gulp.task('default', ['bundle', 'watch']);

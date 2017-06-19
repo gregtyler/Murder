@@ -1,6 +1,6 @@
 import world from './src/World';
 import simulator from './src/components/Simulator';
-//import interrogatorWeb from './src/components/interrogatorWeb';
+import interrogatorWeb from './src/components/interrogatorWeb';
 
 // Build the world
 world.init();
@@ -11,5 +11,5 @@ while (world.target.isAlive || simulator.iterations > 12) {
   simulator.run();
 }
 
-// Being the interrogator
-//interrogatorWeb.start();
+// Begin the interrogator
+interrogatorWeb.start();

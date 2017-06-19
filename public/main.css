@@ -1,0 +1,77 @@
+body {
+  margin: 0;
+  background-color: #999081;
+  font-family: "PT Sans";
+  font-size: 16px;
+}
+
+header {
+  padding: 0.5rem;
+  background-color: hsla(0, 0%, 100%, 0.3);
+  text-align: center;
+  font-family: "PT Serif";
+  font-size: 1.2rem;
+}
+
+.log {
+  padding: 1rem;
+  font-family: monospace;
+}
+
+.type--victim { color: #920c0c; }
+.type--loc { color: #196d19; }
+.type--item { color: #133890; }
+.type--actor { color: #dccf1c; }
+
+.deck {
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  justify-content: space-around;
+}
+
+.card {
+  width: 20%;
+  padding: 1rem 2rem;
+  border-top-left-radius: .5rem;
+  border-top-right-radius: .5rem;
+  background-color: white;
+  transform: translateY(calc(100% - 3rem));
+  box-shadow: 0 0 5px hsla(0, 0%, 0%, 0.3);
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: none;
+}
+
+
+.modal__bg {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: hsla(0, 0%, 0%, 0.6);
+  z-index: 100;
+}
+
+.modal {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  width: 500px;
+  margin-left: -250px;
+  background-color: white;
+  z-index: 105;
+}
+
+.modal__header {
+  background-color: hsla(0, 0%, 0%, 0.3);
+}
+
+.modal__body {
+  padding: 1rem;
+}
