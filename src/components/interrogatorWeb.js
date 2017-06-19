@@ -5,6 +5,7 @@ import arrayIntoList from '../lib/arrayIntoList';
 
 const $deck = document.querySelector('#deck');
 const $log = document.querySelector('#log');
+const $btnAccuse = document.querySelector('#btn-accuse');
 
 class InterrogatorWeb {
   log(item) {
@@ -56,6 +57,8 @@ class InterrogatorWeb {
    * Begin the interrogation process
    */
   start() {
+    const _this = this;
+
     // Draw cards
     this.cards = [
       new Card({name: 'Time interrogation', type: 'TIME'}),
@@ -82,6 +85,28 @@ class InterrogatorWeb {
 
       $deck.appendChild($card);
     }
+
+    // Enable accuse button
+    $btnAccuse.addEventListener('click', function() {
+      const $list = arrayIntoList(world.actors.filter(actor => actor.isAlive), function(accusee) {
+        // Clear the playing field
+        modal.hide();
+        _this.log('<hr>');
+
+        $btnAccuse.hidden = true;
+
+        // Determine the final outcome
+        if (accusee === world.assassin) {
+          _this.log(world.flavour.endCorrect(world));
+        } else {
+          _this.log(world.flavour.endWrong(world, accusee));
+        }
+      });
+
+      modal.show('Who do you want to accuse of the murder?', $list);
+    });
+
+    $btnAccuse.hidden = false;
   }
 };
 
