@@ -25,7 +25,16 @@ header {
 .type--actor { color: #dccf1c; }
 
 .btn-accuse {
-
+  display: block;
+  width: 100px;
+  margin: 0 auto;
+  padding: .75rem 1rem;
+  border: 1px solid hsla(0, 0%, 0%, 0.3);
+  border-radius: .5rem;
+  background-color: #6d4c15;
+  color: #FFF;
+  font-size: 1rem;
+  cursor: pointer;
 }
 
 .deck {
