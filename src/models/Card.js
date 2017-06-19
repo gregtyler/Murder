@@ -17,11 +17,18 @@ export default class Card {
     const _this = this;
 
     return new Promise(function(resolve) {
+      const $div = document.createElement('div');
       const $list = arrayIntoList(_this.getInterrogationOptions(actor), function(target) {
         resolve(_this.performInterrogation(actor, target));
       });
 
-      modal.show(_this.getInterrogationOptionsTitle(), $list);
+      const $intro = document.createElement('divs');
+      $intro.innerHTML = `Interrogating ${actor.name}:<br><br>`;
+
+      $div.appendChild($intro);
+      $div.appendChild($list);
+
+      modal.show(_this.getInterrogationOptionsTitle(), $div);
     });
   }
 
@@ -49,11 +56,11 @@ export default class Card {
     else if (this.type === 'SUSPECT') return 'Which item would you like to ask about?';
   }
 
-  getInterrogationOptions() {
+  getInterrogationOptions(actor) {
     if (this.type === 'LOCATION') return world.locations;
     else if (this.type === 'TIME') return world._log.map(log => ({name: log.time}));
     else if (this.type === 'ITEM') return world.items;
-    else if (this.type === 'SUSPECT') return world.actors;
+    else if (this.type === 'SUSPECT') return world.actors.filter(act => act !== actor);
   }
 
   getDescription() {
